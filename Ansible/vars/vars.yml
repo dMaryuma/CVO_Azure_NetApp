@@ -1,0 +1,48 @@
+## This is the main Vars file for configuring cluster ##
+
+cluster_name: cluster1
+cluster_ip: "172.16.1.5"
+netmask: "255.255.255.0"
+username: "admin"
+password: "Netapp1!"
+https_global: "true"
+validate_certs_global: "false"
+domain: "demo.netapp.com"
+timezone: "Asia/Jerusalem"
+ntp: "dc1.demo.netapp.com"
+ca_cert_filepath: "/home/user/aws_root.cer"
+domain_tunnel_vserver: "svm_azurecvoha"
+log_forward:
+  destination: 10.0.0.1
+  port: 514
+  protocol: udp_unencrypted
+  facility: user
+
+autoSupport:
+ - {node_name: "azurecvoha-01", transport: https, noteto: "abc@def.com,def@ghi.com", mail_hosts: "mail@demo.netapp.com"}
+ - {node_name: "azurecvoha-02", transport: https, noteto: "abc@def.com,def@ghi.com", mail_hosts: "mail@demo.netapp.com"}
+
+dns:
+  - { dns_domains: "{{ domain }}", dns_nameservers: y.y.y.y, vserver: "{{ cluster_name }}"}
+  - { dns_domains: "{{ domain }}", dns_nameservers: y.y.y.y, vserver: svm1}
+  - { dns_domains: "{{ domain }}", dns_nameservers: y.y.y.y, vserver: svm2}
+
+cifsServer: # Join vserver to domain for cifs service
+ - { vserver: svm_azurecvoha, cifs_server_name: cifs11, domain: "{{ domain }}", admin_user: "administrator", admin_password: "Netapp1!", ou: "CN=Computers", use_start_tls: true }
+
+cifsMembers: # Join vserver to domain for cifs service
+ - { vserver: svm_azurecvoha, group: 'BUILTIN\Administrators', member: 'demo\administrator'}
+
+sslCertificate: # Join vserver to domain for cifs service
+ - { vserver: svm_azurecvoha, common_name: ca.demo.netapp.com, name: ca, type: server_ca}
+
+snapshotPolicy: # Join vserver to domain for cifs service
+ - { policy: default, schedule: ['daily', 'weekly'], count: '[20, 30]', snapmirror_label: ['daily', 'weekly']}
+
+exportrules:
+  - { name: EP1, client_match: x.x.x.0/24, vserver: svm1 }
+  - { name: EP2, client_match: x.x.x.0/24, vserver: svm1 }
+
+nfs: 
+  - { vserver: svm1, nfsv3: enabled, nfsv4: enabled, nfsv41: enabled, vstorage: enabled }
+  - { vserver: svm2, nfsv3: enabled, nfsv4: enabled, nfsv41: enabled, vstorage: enabled }

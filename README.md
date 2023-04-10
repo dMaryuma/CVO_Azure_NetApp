@@ -81,3 +81,18 @@ terraform destroy
 ## Recipies:
 Single Node Instance or HA
 This template will deploy a single node or HA Cloud Volumes ONTAP (CVO) into the designated Azure subnet.
+
+# Ansible
+## Configure CVO with ansible using Config file and Variable file
+### Task includs:
+* Configure NTP
+* Change Timezone
+* Setup DNS Server
+* Install SSL Certificate
+* Create Cifs Server
+* Create Domain Tunnel
+* Add member to Cifs local group
+* Modify Snapshot Policy with multiple schedule
+* Enale autosupport
+* Create NFS
+* Create log forward configuration

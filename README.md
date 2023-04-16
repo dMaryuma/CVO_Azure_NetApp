@@ -96,3 +96,12 @@ This template will deploy a single node or HA Cloud Volumes ONTAP (CVO) into the
 * Enale autosupport
 * Create NFS
 * Create log forward configuration
+
+## Requirements
+* ansible version 2.9.10 or newer
+* ansible galaxy collection - 22.5.0 (can obtain from https://galaxy.ansible.com/netapp/ontap)
+
+## How to run?
+```
+ansible-playbook ConfigCluster.yml -e=@../vars/vars.yml
+```

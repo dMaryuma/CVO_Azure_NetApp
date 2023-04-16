@@ -101,6 +101,7 @@ This template will deploy a single node or HA Cloud Volumes ONTAP (CVO) into the
 * ansible version 2.9.10 or newer
 * ansible galaxy collection - 22.5.0 (can obtain from https://galaxy.ansible.com/netapp/ontap)
 * ansible python library -- netapp-lib (can obtain from https://pypi.org/project/netapp-lib/)
+* Python 3.8 or newer
 
 ## How to run?
 ```

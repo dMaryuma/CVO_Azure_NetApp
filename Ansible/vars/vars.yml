@@ -1,6 +1,5 @@
 ## This is the main Vars file for configuring cluster ##
 
-cluster_name: cluster1
 cluster_ip: "172.16.1.5"
 netmask: "255.255.255.0"
 username: "admin"
@@ -38,10 +37,6 @@ sslCertificate: # Join vserver to domain for cifs service
 
 snapshotPolicy: # Join vserver to domain for cifs service
  - { policy: default, schedule: ['daily', 'weekly'], count: '[20, 30]', snapmirror_label: ['daily', 'weekly']}
-
-exportrules:
-  - { name: EP1, client_match: x.x.x.0/24, vserver: svm1 }
-  - { name: EP2, client_match: x.x.x.0/24, vserver: svm1 }
 
 nfs: 
   - { vserver: svm1, nfsv3: enabled, nfsv4: enabled, nfsv41: enabled, vstorage: enabled }

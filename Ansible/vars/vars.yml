@@ -43,8 +43,8 @@ nfs:
   - { vserver: svm2, nfsv3: enabled, nfsv4: enabled, nfsv41: enabled, vstorage: enabled }
 
 renameLif:
-  intercluster:
-    onPrem-01: onPrem-01_IC_new
+  intercluster: # the role you want to access to
+    onPrem-01: onPrem-01_IC_new # the 'key' must be the node name
     onPrem-02: onPrem-02_IC_new
   node_mgmt:
     onPrem-01: onPrem-01_mgmt1_new

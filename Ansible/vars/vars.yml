@@ -1,6 +1,6 @@
 ## This is the main Vars file for configuring cluster ##
-cluster_name: "cluster1"
-cluster_ip: "172.16.1.5"
+cluster_name: "onPrem"
+cluster_ip: "192.168.0.101"
 netmask: "255.255.255.0"
 username: "admin"
 password: "Netapp1!"
@@ -41,3 +41,11 @@ snapshotPolicy: # Join vserver to domain for cifs service
 nfs: 
   - { vserver: svm1, nfsv3: enabled, nfsv4: enabled, nfsv41: enabled, vstorage: enabled }
   - { vserver: svm2, nfsv3: enabled, nfsv4: enabled, nfsv41: enabled, vstorage: enabled }
+
+renameLif:
+  intercluster:
+    onPrem-01: onPrem-01_IC_new
+    onPrem-02: onPrem-02_IC_new
+  node_mgmt:
+    onPrem-01: onPrem-01_mgmt1_new
+    onPrem-02: onPrem-02_mgmt1_new

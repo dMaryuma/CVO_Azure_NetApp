@@ -120,7 +120,6 @@
       "{{ nfs }}"
     when: nfs != None
 
-
   - name: Create log forward configuration
     ignore_errors: yes
     na_ontap_log_forward:
@@ -132,15 +131,28 @@
       <<: *login
 
   - name: Limit Info Gathering net inteface
-    netapp.ontap.na_ontap_info:
+    na_ontap_info:
       gather_subset: "net_interface_info"
       <<: *login
-      vserver: Cluster
-    register: net_interface_info
-    tags: test
+      vserver: "{{ cluster_name }}"
+    register: var_net_interface_info
+    tags: tests
   
-  - name: debug nte_inteface_info
-    debug:
-      var: net_interface_info
-    tags: test
-  
+  #- name: debug net_inteface_info
+  #  debug:
+  #    msg: "{{ item.key }}"
+  #  loop: "{{ var_net_interface_info.ontap_info.net_interface_info | dict2items  }}"
+  #  tags: tests
+
+  - name: Rename Lifs
+    na_ontap_interface:
+      state: present
+      from_name: "{{ item.value.interface_name }}"
+      interface_name: "{{ renameLif[item.value.role][item.value.home_node] }}"
+      vserver: "{{ item.value.vserver }}"
+      use_rest: never
+      <<: *login
+    loop: "{{ var_net_interface_info.ontap_info.net_interface_info | dict2items  }}"
+    when: renameLif[item.value.role][item.value.home_node] | default(None) != None and renameLif[item.value.role][item.value.home_node]|default(None) != item.value.interface_name
+    tags: tests
+
